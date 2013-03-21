@@ -9,7 +9,14 @@
 #import <PreferencePanes/PreferencePanes.h>
 
 @interface PBX_Forwarder : NSPreferencePane
-
+{
+    IBOutlet NSProgressIndicator *progressIndicator;
+    IBOutlet NSNumberFormatter *extensionNumber;
+    IBOutlet NSSecureTextField *extensionPassword;
+    IBOutlet NSNumberFormatter *targetForwardingNumber;
+    IBOutlet NSButton *toggleForwarding;
+    
+}
 - (void)mainViewDidLoad;
 
 @end

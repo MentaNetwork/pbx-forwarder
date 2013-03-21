@@ -10,8 +10,10 @@
 
 @implementation PBX_Forwarder
 
+
 - (void)mainViewDidLoad
 {
+    NSLog(@"OK OK OK");
 }
 
 @end
