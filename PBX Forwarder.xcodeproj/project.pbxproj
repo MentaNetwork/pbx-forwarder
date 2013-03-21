@@ -13,6 +13,11 @@
 		94EEC90616FAEC0F008D0E14 /* PBX_Forwarder.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EEC90516FAEC0F008D0E14 /* PBX_Forwarder.m */; };
 		94EEC90816FAEC0F008D0E14 /* PBX_Forwarder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 94EEC90716FAEC0F008D0E14 /* PBX_Forwarder.tiff */; };
 		94EEC90B16FAEC0F008D0E14 /* PBX_Forwarder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EEC90916FAEC0F008D0E14 /* PBX_Forwarder.xib */; };
+		94EEC91516FAFD18008D0E14 /* PRHOnOffButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EEC91116FAFD18008D0E14 /* PRHOnOffButton.h */; };
+		94EEC91616FAFD18008D0E14 /* PRHOnOffButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EEC91216FAFD18008D0E14 /* PRHOnOffButtonCell.h */; };
+		94EEC91716FAFD18008D0E14 /* PRHOnOffButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EEC91316FAFD18008D0E14 /* PRHOnOffButton.m */; };
+		94EEC91816FAFD18008D0E14 /* PRHOnOffButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EEC91416FAFD18008D0E14 /* PRHOnOffButtonCell.m */; };
+		94EEC91E16FAFFAC008D0E14 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EEC91D16FAFFAC008D0E14 /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +34,11 @@
 		94EEC90516FAEC0F008D0E14 /* PBX_Forwarder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBX_Forwarder.m; sourceTree = "<group>"; };
 		94EEC90716FAEC0F008D0E14 /* PBX_Forwarder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = PBX_Forwarder.tiff; sourceTree = "<group>"; };
 		94EEC90A16FAEC0F008D0E14 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PBX_Forwarder.xib; sourceTree = "<group>"; };
+		94EEC91116FAFD18008D0E14 /* PRHOnOffButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRHOnOffButton.h; sourceTree = "<group>"; };
+		94EEC91216FAFD18008D0E14 /* PRHOnOffButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRHOnOffButtonCell.h; sourceTree = "<group>"; };
+		94EEC91316FAFD18008D0E14 /* PRHOnOffButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRHOnOffButton.m; sourceTree = "<group>"; };
+		94EEC91416FAFD18008D0E14 /* PRHOnOffButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRHOnOffButtonCell.m; sourceTree = "<group>"; };
+		94EEC91D16FAFFAC008D0E14 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94EEC91E16FAFFAC008D0E14 /* Carbon.framework in Frameworks */,
 				94EEC8F616FAEC0F008D0E14 /* Cocoa.framework in Frameworks */,
 				94EEC8F816FAEC0F008D0E14 /* PreferencePanes.framework in Frameworks */,
 			);
@@ -47,6 +58,7 @@
 		94EEC8E716FAEC0F008D0E14 = {
 			isa = PBXGroup;
 			children = (
+				94EEC91D16FAFFAC008D0E14 /* Carbon.framework */,
 				94EEC8FD16FAEC0F008D0E14 /* PBX Forwarder */,
 				94EEC8F416FAEC0F008D0E14 /* Frameworks */,
 				94EEC8F316FAEC0F008D0E14 /* Products */,
@@ -84,6 +96,10 @@
 		94EEC8FD16FAEC0F008D0E14 /* PBX Forwarder */ = {
 			isa = PBXGroup;
 			children = (
+				94EEC91116FAFD18008D0E14 /* PRHOnOffButton.h */,
+				94EEC91216FAFD18008D0E14 /* PRHOnOffButtonCell.h */,
+				94EEC91316FAFD18008D0E14 /* PRHOnOffButton.m */,
+				94EEC91416FAFD18008D0E14 /* PRHOnOffButtonCell.m */,
 				94EEC90416FAEC0F008D0E14 /* PBX_Forwarder.h */,
 				94EEC90516FAEC0F008D0E14 /* PBX_Forwarder.m */,
 				94EEC90716FAEC0F008D0E14 /* PBX_Forwarder.tiff */,
@@ -110,6 +126,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94EEC91516FAFD18008D0E14 /* PRHOnOffButton.h in Headers */,
+				94EEC91616FAFD18008D0E14 /* PRHOnOffButtonCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +208,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				94EEC90616FAEC0F008D0E14 /* PBX_Forwarder.m in Sources */,
+				94EEC91716FAFD18008D0E14 /* PRHOnOffButton.m in Sources */,
+				94EEC91816FAFD18008D0E14 /* PRHOnOffButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
