@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		942696F816FD806800EB8B85 /* logo.256x256.bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 942696F716FD806800EB8B85 /* logo.256x256.bw.png */; };
+		944A059816FD6B0800CEB6D6 /* logo.256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 944A059716FD6B0800CEB6D6 /* logo.256x256.png */; };
 		94EEC8F616FAEC0F008D0E14 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EEC8F516FAEC0F008D0E14 /* Cocoa.framework */; };
 		94EEC8F816FAEC0F008D0E14 /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EEC8F716FAEC0F008D0E14 /* PreferencePanes.framework */; };
 		94EEC90216FAEC0F008D0E14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94EEC90016FAEC0F008D0E14 /* InfoPlist.strings */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		942696F716FD806800EB8B85 /* logo.256x256.bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.256x256.bw.png; sourceTree = "<group>"; };
+		944A059716FD6B0800CEB6D6 /* logo.256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.256x256.png; sourceTree = "<group>"; };
 		94EEC8F216FAEC0F008D0E14 /* PBX Forwarder.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PBX Forwarder.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94EEC8F516FAEC0F008D0E14 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		94EEC8F716FAEC0F008D0E14 /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
@@ -45,6 +49,8 @@
 		94EEC8E716FAEC0F008D0E14 = {
 			isa = PBXGroup;
 			children = (
+				944A059716FD6B0800CEB6D6 /* logo.256x256.png */,
+				942696F716FD806800EB8B85 /* logo.256x256.bw.png */,
 				94EEC8FD16FAEC0F008D0E14 /* PBX Forwarder */,
 				94EEC8F416FAEC0F008D0E14 /* Frameworks */,
 				94EEC8F316FAEC0F008D0E14 /* Products */,
@@ -165,6 +171,8 @@
 			files = (
 				94EEC90216FAEC0F008D0E14 /* InfoPlist.strings in Resources */,
 				94EEC90B16FAEC0F008D0E14 /* PBX_Forwarder.xib in Resources */,
+				944A059816FD6B0800CEB6D6 /* logo.256x256.png in Resources */,
+				942696F816FD806800EB8B85 /* logo.256x256.bw.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +323,7 @@
 				94EEC91016FAEC0F008D0E14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
