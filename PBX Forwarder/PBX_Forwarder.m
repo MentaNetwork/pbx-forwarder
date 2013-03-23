@@ -79,14 +79,55 @@
     [forwardingToggler setTitle:[forwardingToggler state] ? @"DESACTIVAR FORWARDING" : @"ACTIVAR FORWARDING"];
 }
 
+- (BOOL)requiredDataIsComplete
+{
+    NSString * error;
+    
+    if ([[self getStringPreferenceValueForKey:KEY_EXTENSION_NUMBER] isEqualToString:@""]) {
+        error = @"Falta la extensión";
+        [extensionNumber becomeFirstResponder];
+    } else if ([[self getStringPreferenceValueForKey:KEY_EXTENSION_PASSWORD] isEqualToString:@""]) {
+        error = @"Falta el password";
+        [extensionPassword becomeFirstResponder];
+    } else if ([[self getStringPreferenceValueForKey:KEY_EXTENSION_PASSWORD] isEqualToString:@""]) {
+        error = @"Falta el número de destino";
+        [targetForwardingNumber becomeFirstResponder];
+    } else if (targetForwardingNumber.stringValue.length < 8) {
+        error = @"El número de destino es muy corto";
+        [targetForwardingNumber becomeFirstResponder];
+    } else {
+        error = @"";
+    }
+    
+    [errorMessage setStringValue:error];
+    return [error isEqualToString:@""];
+}
+
 - (IBAction)preferenceDidChange:(id)sender
 {
 
-    [progressIndicator setHidden:FALSE];
+    [progressIndicator setHidden:NO];
     [progressIndicator startAnimation:self];
     
     if (sender == forwardingToggler) {
-        [self setPreferenceValueForKey:KEY_TOGGLE_FORWARDING withValue:[forwardingToggler state] ? kCFBooleanTrue : kCFBooleanFalse];
+        if ([self requiredDataIsComplete]) {
+            
+            CFBooleanRef forwarding = [forwardingToggler state] ? kCFBooleanTrue : kCFBooleanFalse;
+            
+            [self setPreferenceValueForKey:KEY_TOGGLE_FORWARDING
+                                 withValue:forwarding];
+            
+            if (forwarding == kCFBooleanTrue) {
+                [self addForwarderAsLoginItem];
+            } else {
+                [self removeForwarderAsLoginItem];
+            }
+        
+        } else {
+            [forwardingToggler setState:0];
+            [self removeForwarderAsLoginItem];
+        }
+        
         [self updateForwardingTogglerButton];
         
     } else if (sender == extensionNumber) {
@@ -98,7 +139,7 @@
     }
     
     [progressIndicator stopAnimation:self];
-    [progressIndicator setHidden:TRUE];
+    [progressIndicator setHidden:YES];
     
     NSLog(@"Saving %@ = %@ in preferenceDidChange", sender, [sender stringValue]);
 }
