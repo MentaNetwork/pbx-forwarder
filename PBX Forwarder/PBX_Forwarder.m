@@ -103,6 +103,49 @@
     NSLog(@"Saving %@ = %@ in preferenceDidChange", sender, [sender stringValue]);
 }
 
+- (void)addForwarderAsLoginItem
+{
+    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:APP_PATH];
+	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    
+	if (loginItems) {
+		// insert
+		LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
+                                                                     kLSSharedFileListItemLast, NULL, NULL,
+                                                                     url, NULL, NULL);
+        NSLog(@"Adding login item %@", item);
+		if (item) {
+			CFRelease(item);
+        }
+	}
+    
+	CFRelease(loginItems);
+}
+
+- (void)removeForwarderAsLoginItem
+{
+	CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:APP_PATH];
+    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    
+	if (loginItems) {
+		UInt32 seedValue;
+		// cast the login items to a NSArray for easy iteration
+		NSArray *loginItemsArray = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
+        
+		for(int i = 0; i < [loginItemsArray count]; i++) {
+			LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
+			// resolve the item with URL
+			if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
+				NSString * urlPath = [(NSURL*)url path];
+				if ([urlPath compare:APP_PATH] == NSOrderedSame) {
+                    NSLog(@"Removing login item %@", itemRef);
+					LSSharedFileListItemRemove(loginItems, itemRef);
+				}
+			}
+		}
+		[loginItemsArray release];
+	}
+}
 
 
 @end
