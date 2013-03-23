@@ -14,7 +14,7 @@
 - (id)initWithBundle:(NSBundle *)bundle
 {
     if ((self = [super initWithBundle:bundle]) != nil ) {
-        appID = CFSTR("mx.menta.pbx-forwarder");
+        appID = PREFPANE_NAME;
     }
     
     return self;

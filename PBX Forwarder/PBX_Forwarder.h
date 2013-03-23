@@ -8,10 +8,12 @@
 
 #import <PreferencePanes/PreferencePanes.h>
 
-#define KEY_TOGGLE_FORWARDING CFSTR("Toggle forwarding")
-#define KEY_EXTENSION_NUMBER CFSTR("Extension number")
-#define KEY_EXTENSION_PASSWORD CFSTR("Extension password")
-#define KEY_TARGET_FORWARDING_NUMBER CFSTR("Target forwarding number")
+#define KEY_TOGGLE_FORWARDING CFSTR("toggle_forwarding")
+#define KEY_EXTENSION_NUMBER CFSTR("extension_number")
+#define KEY_EXTENSION_PASSWORD CFSTR("extension_password")
+#define KEY_TARGET_FORWARDING_NUMBER CFSTR("target_forwarding_number")
+#define PREFPANE_NAME CFSTR("mx.menta.pbx-forwarder-prefpane")
+#define APP_PATH @"/Applications/PBXForwarder.app"
 
 
 @interface PBX_Forwarder : NSPreferencePane
@@ -27,8 +29,6 @@
 
 - (IBAction)preferenceDidChange:(id)sender;
 
-- (void)mainViewDidLoad;
-
 - (id)getPreferenceValueForKey:(CFStringRef)key withType:(CFTypeID)type;
 
 - (bool)getBooleanPreferenceValueForKey:(CFStringRef)key;
@@ -37,5 +37,10 @@
 
 - (void)setPreferenceValueForKey:(CFStringRef)key withValue:(CFPropertyListRef)value;
 
+- (BOOL)requiredDataIsComplete;
+
+- (void)addForwarderAsLoginItem;
+
+- (void) removeForwarderAsLoginItem;
 
 @end
