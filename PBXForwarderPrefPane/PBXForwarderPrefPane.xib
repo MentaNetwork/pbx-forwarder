@@ -35,7 +35,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="409411428">
 			<object class="NSCustomObject" id="294453543">
-				<string key="NSClassName">PBX_Forwarder</string>
+				<string key="NSClassName">PBXForwarderPrefPane</string>
 			</object>
 			<object class="NSCustomObject" id="308860122">
 				<string key="NSClassName">FirstResponder</string>
@@ -69,15 +69,12 @@
 									<array class="NSMutableArray" key="NSSubviews"/>
 									<string key="NSFrame">{{1, 1}, {362, 147}}</string>
 									<reference key="NSSuperview" ref="425669907"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1016446183"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
 							<string key="NSFrame">{{266, 41}, {364, 163}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSOffsets">{0, 0}</string>
 							<object class="NSTextFieldCell" key="NSTitleCell">
@@ -115,7 +112,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{297, 149}, {140, 17}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="581832293"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -156,7 +152,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{297, 108}, {161, 17}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="499965204"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -177,7 +172,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{297, 67}, {125, 17}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="411794614"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -198,7 +192,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{481, 106}, {96, 22}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="162455189"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -228,7 +221,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{481, 147}, {39, 22}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="44546843"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -294,7 +286,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{481, 65}, {96, 22}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -351,7 +342,6 @@
 							<int key="NSvFlags">-2147483380</int>
 							<string key="NSFrame">{{30, 54}, {196, 20}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="425669907"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSHuggingPriority">{250, 250}</string>
@@ -364,8 +354,6 @@
 							<array class="NSMutableArray" key="NSSubviews"/>
 							<string key="NSFrame">{{267, 225}, {362, 38}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="107011422">
@@ -393,7 +381,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{266, 277}, {390, 51}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="527318008"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -424,8 +411,6 @@ oXRpY2FtZW50ZSBhbCBwcmVuZGVyIHkgYXBhZ2FyIGVsIGVxdWlwby4</string>
 							</set>
 							<string key="NSFrame">{{30, 100}, {196, 196}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="1072097024">
@@ -449,7 +434,6 @@ oXRpY2FtZW50ZSBhbCBwcmVuZGVyIHkgYXBhZ2FyIGVsIGVxdWlwby4</string>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{266, 200}, {364, 17}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="715246873"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -468,7 +452,6 @@ oXRpY2FtZW50ZSBhbCBwcmVuZGVyIHkgYXBhZ2FyIGVsIGVxdWlwby4</string>
 					</array>
 					<string key="NSFrameSize">{668, 368}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="563823344"/>
 					<bool key="NSViewIsLayerTreeHost">YES</bool>
 				</object>
@@ -487,14 +470,6 @@ oXRpY2FtZW50ZSBhbCBwcmVuZGVyIHkgYXBhZ2FyIGVsIGVxdWlwby4</string>
 						<reference key="destination" ref="660800786"/>
 					</object>
 					<int key="connectionID">26</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">extensionNumber</string>
-						<reference key="source" ref="294453543"/>
-						<reference key="destination" ref="581832293"/>
-					</object>
-					<int key="connectionID">145</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -524,14 +499,6 @@ oXRpY2FtZW50ZSBhbCBwcmVuZGVyIHkgYXBhZ2FyIGVsIGVxdWlwby4</string>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">preferenceDidChange:</string>
 						<reference key="source" ref="294453543"/>
-						<reference key="destination" ref="581832293"/>
-					</object>
-					<int key="connectionID">151</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">preferenceDidChange:</string>
-						<reference key="source" ref="294453543"/>
 						<reference key="destination" ref="499965204"/>
 					</object>
 					<int key="connectionID">152</int>
@@ -546,27 +513,59 @@ oXRpY2FtZW50ZSBhbCBwcmVuZGVyIHkgYXBhZ2FyIGVsIGVxdWlwby4</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">forwardingToggler</string>
-						<reference key="source" ref="294453543"/>
-						<reference key="destination" ref="527318008"/>
-					</object>
-					<int key="connectionID">164</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">preferenceDidChange:</string>
-						<reference key="source" ref="294453543"/>
-						<reference key="destination" ref="107011422"/>
-					</object>
-					<int key="connectionID">166</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">errorMessage</string>
 						<reference key="source" ref="294453543"/>
 						<reference key="destination" ref="685720910"/>
 					</object>
 					<int key="connectionID">180</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">forwardingToggler</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="527318008"/>
+					</object>
+					<int key="connectionID">182</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">preferenceDidChange:</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="527318008"/>
+					</object>
+					<int key="connectionID">183</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">extensionNumber</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="581832293"/>
+					</object>
+					<int key="connectionID">184</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">preferenceDidChange:</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="581832293"/>
+					</object>
+					<int key="connectionID">185</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">logo</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="563823344"/>
+					</object>
+					<int key="connectionID">186</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="660800786"/>
+						<reference key="destination" ref="294453543"/>
+					</object>
+					<int key="connectionID">181</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -827,97 +826,9 @@ oXRpY2FtZW50ZSBhbCBwcmVuZGVyIHkgYXBhZ2FyIGVsIGVxdWlwby4</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">180</int>
+			<int key="maxID">186</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">NSPreferencePane</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="_firstKeyView">NSView</string>
-						<string key="_initialKeyView">NSView</string>
-						<string key="_lastKeyView">NSView</string>
-						<string key="_window">NSWindow</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="_firstKeyView">
-							<string key="name">_firstKeyView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_initialKeyView">
-							<string key="name">_initialKeyView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_lastKeyView">
-							<string key="name">_lastKeyView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_window">
-							<string key="name">_window</string>
-							<string key="candidateClassName">NSWindow</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSPreferencePane.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PBX_Forwarder</string>
-					<string key="superclassName">NSPreferencePane</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">preferenceDidChange:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">preferenceDidChange:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">preferenceDidChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="errorMessage">NSTextField</string>
-						<string key="extensionNumber">NSTextField</string>
-						<string key="extensionPassword">NSSecureTextField</string>
-						<string key="forwardingToggler">NSButton</string>
-						<string key="progressIndicator">NSProgressIndicator</string>
-						<string key="targetForwardingNumber">NSTextField</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="errorMessage">
-							<string key="name">errorMessage</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="extensionNumber">
-							<string key="name">extensionNumber</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="extensionPassword">
-							<string key="name">extensionPassword</string>
-							<string key="candidateClassName">NSSecureTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="forwardingToggler">
-							<string key="name">forwardingToggler</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="progressIndicator">
-							<string key="name">progressIndicator</string>
-							<string key="candidateClassName">NSProgressIndicator</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="targetForwardingNumber">
-							<string key="name">targetForwardingNumber</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PBX_Forwarder.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

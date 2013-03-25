@@ -1,8 +1,8 @@
 //
-//  PBX_Forwarder.h
-//  PBX Forwarder
+//  PBXForwarderPrefPane.h
+//  PBXForwarderPrefPane
 //
-//  Created by Ernesto MB on 21/03/13.
+//  Created by Ernesto MB on 23/03/13.
 //  Copyright (c) 2013 Ernesto MB. All rights reserved.
 //
 
@@ -13,10 +13,10 @@
 #define KEY_EXTENSION_PASSWORD CFSTR("extension_password")
 #define KEY_TARGET_FORWARDING_NUMBER CFSTR("target_forwarding_number")
 #define PREFPANE_NAME CFSTR("mx.menta.pbx-forwarder-prefpane")
-#define APP_PATH @"/Applications/PBXForwarder.app"
+#define APP_PATH @"/Applications/PBXForwarderService.app"
 
 
-@interface PBX_Forwarder : NSPreferencePane
+@interface PBXForwarderPrefPane : NSPreferencePane
 {
     IBOutlet NSButton *forwardingToggler;
     IBOutlet NSTextField *extensionNumber;
@@ -24,6 +24,7 @@
     IBOutlet NSTextField *targetForwardingNumber;
     IBOutlet NSProgressIndicator *progressIndicator;
     IBOutlet NSTextField *errorMessage;
+    IBOutlet NSImageView *logo;
     CFStringRef appID;
 }
 
@@ -41,6 +42,6 @@
 
 - (void)addForwarderAsLoginItem;
 
-- (void) removeForwarderAsLoginItem;
+- (void)removeForwarderAsLoginItem;
 
 @end

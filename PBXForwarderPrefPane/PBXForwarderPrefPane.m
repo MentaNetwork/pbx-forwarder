@@ -1,14 +1,14 @@
 //
-//  PBX_Forwarder.m
-//  PBX Forwarder
+//  PBXForwarderPrefPane.m
+//  PBXForwarderPrefPane
 //
-//  Created by Ernesto MB on 21/03/13.
+//  Created by Ernesto MB on 23/03/13.
 //  Copyright (c) 2013 Ernesto MB. All rights reserved.
 //
 
-#import "PBX_Forwarder.h"
+#import "PBXForwarderPrefPane.h"
 
-@implementation PBX_Forwarder
+@implementation PBXForwarderPrefPane
 
 
 - (id)initWithBundle:(NSBundle *)bundle
@@ -68,15 +68,17 @@
     [extensionPassword setStringValue:[self getStringPreferenceValueForKey:KEY_EXTENSION_PASSWORD]];
     [targetForwardingNumber setStringValue:[self getStringPreferenceValueForKey:KEY_TARGET_FORWARDING_NUMBER]];
     
-    [self updateForwardingTogglerButton];
+    [self updateForwardingVisualStatus];
     
     NSLog(@"state %@", [forwardingToggler stringValue]);
     
 }
 
-- (void)updateForwardingTogglerButton
+- (void)updateForwardingVisualStatus
 {
-    [forwardingToggler setTitle:[forwardingToggler state] ? @"DESACTIVAR FORWARDING" : @"ACTIVAR FORWARDING"];
+    NSInteger on = [forwardingToggler state];
+    [forwardingToggler setTitle:on ? @"DESACTIVAR FORWARDING" : @"ACTIVAR FORWARDING"];
+    //[logo setImage:[NSImage imageNamed:on ? @"logo.256x256.png" : @"logo.256x256.bw.png"]];
 }
 
 - (BOOL)requiredDataIsComplete
@@ -105,7 +107,7 @@
 
 - (IBAction)preferenceDidChange:(id)sender
 {
-
+    
     [progressIndicator setHidden:NO];
     [progressIndicator startAnimation:self];
     
@@ -122,13 +124,13 @@
             } else {
                 [self removeForwarderAsLoginItem];
             }
-        
+            
         } else {
             [forwardingToggler setState:0];
             [self removeForwarderAsLoginItem];
         }
         
-        [self updateForwardingTogglerButton];
+        [self updateForwardingVisualStatus];
         
     } else if (sender == extensionNumber) {
         [self setPreferenceValueForKey:KEY_EXTENSION_NUMBER withValue:[extensionNumber stringValue]];
