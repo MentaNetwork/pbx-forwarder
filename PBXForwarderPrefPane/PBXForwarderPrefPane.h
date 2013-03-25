@@ -38,6 +38,8 @@
 
 - (void)setPreferenceValueForKey:(CFStringRef)key withValue:(CFPropertyListRef)value;
 
+- (void)updateForwardingVisualStatus;
+
 - (BOOL)requiredDataIsComplete;
 
 - (void)addForwarderAsLoginItem;
