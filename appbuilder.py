@@ -9,10 +9,12 @@ if len(argv) != 3:
 script_name = argv[1]
 app_name = argv[2]
 contents_path = path.join(app_name, 'Contents')
+resources_path = path.join(contents_path, 'Resources')
 macos_path = path.join(contents_path, 'MacOS')
 version = '1.0.0'
 bundle_name = app_name.split('.')[0]
 bundle_identifier = app_name
+icon_name = bundle_name + '.icns'
 
 info_plist_tpl = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -21,11 +23,11 @@ info_plist_tpl = """<?xml version="1.0" encoding="UTF-8"?>
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleExecutable</key>
-    <string>main.py</string>
+    <string>%s</string>
     <key>CFBundleGetInfoString</key>
     <string>%s</string>
     <key>CFBundleIconFile</key>
-    <string>app.icns</string>
+    <string>%s</string>
     <key>CFBundleIdentifier</key>
     <string>%s</string>
     <key>CFBundleInfoDictionaryVersion</key>
@@ -64,15 +66,22 @@ def write_file(base_path, file, contents):
 def main():
     make_dir(app_name)
     make_dir(contents_path)
+    make_dir(resources_path)
     make_dir(macos_path)
-    info_plist_vars = (bundle_name + ' ' + version,
+    info_plist_vars = (script_name,
+                       bundle_name + ' ' + version,
+                       icon_name,
                        bundle_identifier,
                        bundle_name,
-                       bundle_name + ' ' + version, version)
+                       bundle_name + ' ' + version,
+                       version)
     info_plist_contents = info_plist_tpl % info_plist_vars
     write_file(contents_path, 'Info.plist', info_plist_contents)
-    write_file(contents_path, 'PkgInfo', 'APPL????')
+    write_file(contents_path, 'PkgInfo', 'APPL' + bundle_name.upper())
     write_file(macos_path, script_name, open(script_name).read())
+    #write_file(app_name, icon_name, open(icon_name).read())
+    #write_file(contents_path, icon_name, open(icon_name).read())
+    write_file(resources_path, icon_name, open(icon_name).read())
     old_mode = stat(path.join(macos_path, script_name)).st_mode
     new_mode = old_mode | S_IXUSR | S_IXGRP | S_IXOTH
     chmod(path.join(macos_path, script_name), new_mode)
