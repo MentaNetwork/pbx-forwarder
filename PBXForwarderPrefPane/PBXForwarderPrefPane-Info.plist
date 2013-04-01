@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>logo.256x256.png</string>
 	<key>CFBundleIdentifier</key>
 	<string>Menta.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -27,9 +27,9 @@
 	<key>NSMainNibFile</key>
 	<string>PBXForwarderPrefPane</string>
 	<key>NSPrefPaneIconFile</key>
-	<string>PBXForwarderPrefPane.tiff</string>
+	<string>logo.256x256.png</string>
 	<key>NSPrefPaneIconLabel</key>
-	<string>PBXForwarderPrefPane</string>
+	<string>PBX Forwarder</string>
 	<key>NSPrincipalClass</key>
 	<string>PBXForwarderPrefPane</string>
 </dict>
