@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		943B2B7416FFEA1B0086D6F6 /* logo.256x256.bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 943B2B7216FFEA1B0086D6F6 /* logo.256x256.bw.png */; };
 		943B2B7516FFEA1B0086D6F6 /* logo.256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 943B2B7316FFEA1B0086D6F6 /* logo.256x256.png */; };
 		949FD20716FE93DF00F8624D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949FD20616FE93DF00F8624D /* Cocoa.framework */; };
 		949FD20916FE93DF00F8624D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949FD20816FE93DF00F8624D /* PreferencePanes.framework */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		943B2B7216FFEA1B0086D6F6 /* logo.256x256.bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.256x256.bw.png; sourceTree = "<group>"; };
 		943B2B7316FFEA1B0086D6F6 /* logo.256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.256x256.png; sourceTree = "<group>"; };
 		949FD20316FE93DF00F8624D /* PBXForwarderPrefPane.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PBXForwarderPrefPane.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
 		949FD20616FE93DF00F8624D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -89,7 +87,6 @@
 				949FD21516FE93DF00F8624D /* PBXForwarderPrefPane.h */,
 				949FD21616FE93DF00F8624D /* PBXForwarderPrefPane.m */,
 				949FD22216FE946000F8624D /* PBXForwarderPrefPane.xib */,
-				943B2B7216FFEA1B0086D6F6 /* logo.256x256.bw.png */,
 				943B2B7316FFEA1B0086D6F6 /* logo.256x256.png */,
 				949FD20F16FE93DF00F8624D /* Supporting Files */,
 			);
@@ -171,7 +168,6 @@
 			files = (
 				949FD21316FE93DF00F8624D /* InfoPlist.strings in Resources */,
 				949FD22316FE946000F8624D /* PBXForwarderPrefPane.xib in Resources */,
-				943B2B7416FFEA1B0086D6F6 /* logo.256x256.bw.png in Resources */,
 				943B2B7516FFEA1B0086D6F6 /* logo.256x256.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
