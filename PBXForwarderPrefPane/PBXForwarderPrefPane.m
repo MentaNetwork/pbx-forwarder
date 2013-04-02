@@ -8,11 +8,10 @@
 
 #import "PBXForwarderPrefPane.h"
 
-NSString * const KEY_TOGGLE_FORWARDING = @"toggle_forwarding";
-NSString * const KEY_EXTENSION_NUMBER = @"extension_number";
-NSString * const KEY_EXTENSION_PASSWORD = @"extension_password";
-NSString * const KEY_TARGET_FORWARDING_NUMBER = @"target_forwarding_number";
-NSString * const PREFPANE_NAME = @"mx.menta.pbx-forwarder-prefpane";
+NSString * const KEY_TOGGLE_FORWARDING = @"mx.menta.pbx.toggle_forwarding";
+NSString * const KEY_EXTENSION_NUMBER = @"mx.menta.pbx.extension_number";
+NSString * const KEY_EXTENSION_PASSWORD = @"mx.menta.pbx.extension_password";
+NSString * const KEY_TARGET_FORWARDING_NUMBER = @"mx.menta.pbx.target_forwarding_number";
 NSString * const APP_PATH = @"/Applications/PBXForwarderService.app";
 
 @implementation PBXForwarderPrefPane
@@ -28,14 +27,13 @@ NSString * const APP_PATH = @"/Applications/PBXForwarderService.app";
 - (NSString *)getPreferenceValueForKey:(NSString *)key
 {
     NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
-    [defaults addSuiteNamed:PREFPANE_NAME];
-    return [defaults stringForKey:key];
+    NSString * value = [defaults stringForKey:key];
+    return value ? value : @"";
 }
 
 - (void)setPreferenceValueForKey:(NSString *)key withValue:(CFPropertyListRef)value
 {
     NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
-    [defaults addSuiteNamed:PREFPANE_NAME];
     [defaults setValue:(__bridge id)(value) forKey:key];
     [defaults synchronize];
 }
@@ -91,9 +89,9 @@ NSString * const APP_PATH = @"/Applications/PBXForwarderService.app";
     
     if (![self requiredDataIsComplete]) {
         [forwardingToggler setState:0];
+        [self setPreferenceValueForKey:KEY_TOGGLE_FORWARDING withValue:FALSE];
         [self removeForwarderAsLoginItem];
         [self updateForwardingVisualStatus];
-        return;
     }
     
     if (sender == forwardingToggler) {

@@ -12,7 +12,6 @@ extern NSString * const KEY_TOGGLE_FORWARDING;
 extern NSString * const KEY_EXTENSION_NUMBER;
 extern NSString * const KEY_EXTENSION_PASSWORD;
 extern NSString * const KEY_TARGET_FORWARDING_NUMBER;
-extern NSString * const PREFPANE_NAME;
 extern NSString * const APP_PATH;
 
 @interface PBXForwarderPrefPane : NSPreferencePane
