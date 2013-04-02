@@ -2,6 +2,7 @@
 # encoding:utf-8
 import os
 import re
+import sys
 import logging
 import logging.handlers
 from time import sleep
@@ -86,7 +87,7 @@ class Service(object):
         
         try:
             self.add_forwarder()
-            exit()
+            sys.exit()
         except ServiceException, e:
             error = 'Could not add the forwarder due to: %s' % e
             self.log.critical(error)
@@ -107,7 +108,7 @@ class Service(object):
                       'Submit.y': '15',
                       'Submit': 'Log In', 
                       'url': ''}
-        response = self.session.post('http://pbx.menta/index2.php', data=login_data)
+        response = self.session.post('http://pbx.menta/index2.php', data=login_data, timeout=100)
         # TODO: check response body
         if not response.ok:
             error = 'Login failed'
@@ -120,7 +121,7 @@ class Service(object):
         forwarding_data = {'extension': self.preferences['extension_number'],
                         'number': self.preferences['target_forwarding_number']}
         url = 'http://pbx.menta/userforwardmodify2.php'
-        response = self.session.post(url, data=forwarding_data)
+        response = self.session.post(url, data=forwarding_data, timeout=100)
         
         # TODO: check response body
         if not response.ok:
@@ -134,7 +135,7 @@ class Service(object):
         forwarding_data = {'extension': self.preferences['extension_number'],
                            'Submit': 'Delete'}
         url = 'http://pbx.menta/userforwarddelete2.php'
-        response = self.session.post(url, data=forwarding_data)
+        response = self.session.post(url, data=forwarding_data, timeout=100)
 
         # TODO: check response body
         if not response.ok:
@@ -148,7 +149,6 @@ if __name__ == '__main__':
         service = Service()
         service.main()
     except Exception, e:
-        #raise
         log = Log()
         log.critical('Fatal error: %s' % e)
-        exit(1)
+        sys.exit(2)
