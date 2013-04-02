@@ -8,90 +8,69 @@
 
 #import "PBXForwarderPrefPane.h"
 
-@implementation PBXForwarderPrefPane
+NSString * const KEY_TOGGLE_FORWARDING = @"toggle_forwarding";
+NSString * const KEY_EXTENSION_NUMBER = @"extension_number";
+NSString * const KEY_EXTENSION_PASSWORD = @"extension_password";
+NSString * const KEY_TARGET_FORWARDING_NUMBER = @"target_forwarding_number";
+NSString * const PREFPANE_NAME = @"mx.menta.pbx-forwarder-prefpane";
+NSString * const APP_PATH = @"/Applications/PBXForwarderService.app";
 
+@implementation PBXForwarderPrefPane
 
 - (id)initWithBundle:(NSBundle *)bundle
 {
     if ((self = [super initWithBundle:bundle]) != nil ) {
-        appID = PREFPANE_NAME;
+        NSLog(@"-initWithBundle: starting app");
     }
-    
     return self;
 }
 
-- (id)getPreferenceValueForKey:(CFStringRef)key withType:(CFTypeID)type
+- (NSString *)getPreferenceValueForKey:(NSString *)key
 {
-    CFPropertyListRef value = CFPreferencesCopyAppValue(key, appID);
-    
-    if (type == CFBooleanGetTypeID()) {
-        if (value && CFGetTypeID(value) == type) {
-            return (id)CFBooleanGetValue(value);
-        }
-        return NO;
-    } else if (type == CFStringGetTypeID()) {
-        if (value && CFGetTypeID(value) == type) {
-            return (NSString *)value;
-        }
-    }
-    if (value) {
-        CFRelease(value);
-    }
-    return @"";
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+    [defaults addSuiteNamed:PREFPANE_NAME];
+    return [defaults stringForKey:key];
 }
 
-- (bool)getBooleanPreferenceValueForKey:(CFStringRef)key
+- (void)setPreferenceValueForKey:(NSString *)key withValue:(CFPropertyListRef)value
 {
-    return [self getPreferenceValueForKey:key withType:CFBooleanGetTypeID()];
-}
-
-- (id)getStringPreferenceValueForKey:(CFStringRef)key
-{
-    return [self getPreferenceValueForKey:key withType:CFStringGetTypeID()];
-}
-
-- (void)setPreferenceValueForKey:(CFStringRef)key withValue:(CFPropertyListRef)value
-{
-    CFNotificationCenterRef center;
-    CFPreferencesSetAppValue(key, value, appID);
-    CFPreferencesAppSynchronize(appID);
-    center = CFNotificationCenterGetDistributedCenter();
-    CFNotificationCenterPostNotification(center, CFSTR("Menta PBX preferences changed"), NULL, NULL, TRUE);
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+    [defaults addSuiteNamed:PREFPANE_NAME];
+    [defaults setValue:(__bridge id)(value) forKey:key];
+    [defaults synchronize];
 }
 
 - (void)mainViewDidLoad
 {
-    NSLog(@"mainViewDidLoad");
-    
-    [forwardingToggler setState:[self getBooleanPreferenceValueForKey:KEY_TOGGLE_FORWARDING]];
-    [extensionNumber setStringValue:[self getStringPreferenceValueForKey:KEY_EXTENSION_NUMBER]];
-    [extensionPassword setStringValue:[self getStringPreferenceValueForKey:KEY_EXTENSION_PASSWORD]];
-    [targetForwardingNumber setStringValue:[self getStringPreferenceValueForKey:KEY_TARGET_FORWARDING_NUMBER]];
+    NSLog(@"-mainViewDidLoad: setting interface values from preferences");
+    [forwardingToggler setStringValue:[self getPreferenceValueForKey:KEY_TOGGLE_FORWARDING]];
+    [extensionNumber setStringValue:[self getPreferenceValueForKey:KEY_EXTENSION_NUMBER]];
+    [extensionPassword setStringValue:[self getPreferenceValueForKey:KEY_EXTENSION_PASSWORD]];
+    [targetForwardingNumber setStringValue:[self getPreferenceValueForKey:KEY_TARGET_FORWARDING_NUMBER]];
     
     [self updateForwardingVisualStatus];
     
-    NSLog(@"state %@", [forwardingToggler stringValue]);
-    
+    NSLog(@"-mainViewDidLoad: forwarding state is %@", [forwardingToggler stringValue]);
 }
 
 - (void)updateForwardingVisualStatus
 {
     NSInteger on = [forwardingToggler state];
     [forwardingToggler setTitle:on ? @"DESACTIVAR FORWARDING" : @"ACTIVAR FORWARDING"];
-    //[logo setImage:[NSImage imageNamed:on ? @"logo.256x256.png" : @"logo.256x256.bw.png"]];
+    [logo setAlphaValue:on ? 1.0 : 0.3];
 }
 
 - (BOOL)requiredDataIsComplete
 {
     NSString * error;
     
-    if ([[self getStringPreferenceValueForKey:KEY_EXTENSION_NUMBER] isEqualToString:@""]) {
+    if ([extensionNumber.stringValue isEqualToString:@""]) {
         error = @"Falta la extensión";
         [extensionNumber becomeFirstResponder];
-    } else if ([[self getStringPreferenceValueForKey:KEY_EXTENSION_PASSWORD] isEqualToString:@""]) {
+    } else if ([extensionPassword.stringValue isEqualToString:@""]) {
         error = @"Falta el password";
         [extensionPassword becomeFirstResponder];
-    } else if ([[self getStringPreferenceValueForKey:KEY_EXTENSION_PASSWORD] isEqualToString:@""]) {
+    } else if ([targetForwardingNumber.stringValue isEqualToString:@""]) {
         error = @"Falta el número de destino";
         [targetForwardingNumber becomeFirstResponder];
     } else if (targetForwardingNumber.stringValue.length < 8) {
@@ -107,88 +86,85 @@
 
 - (IBAction)preferenceDidChange:(id)sender
 {
+    //[progressIndicator setHidden:NO];
+    //[progressIndicator startAnimation:self];
     
-    [progressIndicator setHidden:NO];
-    [progressIndicator startAnimation:self];
+    if (![self requiredDataIsComplete]) {
+        [forwardingToggler setState:0];
+        [self removeForwarderAsLoginItem];
+        [self updateForwardingVisualStatus];
+        return;
+    }
     
     if (sender == forwardingToggler) {
-        if ([self requiredDataIsComplete]) {
-            
-            CFBooleanRef forwarding = [forwardingToggler state] ? kCFBooleanTrue : kCFBooleanFalse;
-            
-            [self setPreferenceValueForKey:KEY_TOGGLE_FORWARDING
-                                 withValue:forwarding];
-            
-            if (forwarding == kCFBooleanTrue) {
-                [self addForwarderAsLoginItem];
-            } else {
-                [self removeForwarderAsLoginItem];
-            }
-            
+        CFBooleanRef forwarding = [forwardingToggler state] ? kCFBooleanTrue : kCFBooleanFalse;
+        
+        [self setPreferenceValueForKey:KEY_TOGGLE_FORWARDING withValue:forwarding];
+        
+        if (forwarding == kCFBooleanTrue) {
+            [self addForwarderAsLoginItem];
         } else {
-            [forwardingToggler setState:0];
             [self removeForwarderAsLoginItem];
         }
+        
+        CFRelease(forwarding);
         
         [self updateForwardingVisualStatus];
         
     } else if (sender == extensionNumber) {
-        [self setPreferenceValueForKey:KEY_EXTENSION_NUMBER withValue:[extensionNumber stringValue]];
+        [self setPreferenceValueForKey:KEY_EXTENSION_NUMBER withValue:(__bridge CFPropertyListRef)([extensionNumber stringValue])];
     } else if (sender == extensionPassword) {
-        [self setPreferenceValueForKey:KEY_EXTENSION_PASSWORD withValue:[extensionPassword stringValue]];
+        [self setPreferenceValueForKey:KEY_EXTENSION_PASSWORD withValue:(__bridge CFPropertyListRef)([extensionPassword stringValue])];
     } else if (sender == targetForwardingNumber) {
-        [self setPreferenceValueForKey:KEY_TARGET_FORWARDING_NUMBER withValue:[targetForwardingNumber stringValue]];
+        [self setPreferenceValueForKey:KEY_TARGET_FORWARDING_NUMBER withValue:(__bridge CFPropertyListRef)([targetForwardingNumber stringValue])];
     }
     
-    [progressIndicator stopAnimation:self];
-    [progressIndicator setHidden:YES];
+    //[progressIndicator stopAnimation:self];
+    //[progressIndicator setHidden:YES];
     
-    NSLog(@"Saving %@ = %@ in preferenceDidChange", sender, [sender stringValue]);
+    NSLog(@"-preferenceDidChange: saving preference %@ with %@", sender, [sender stringValue]);
 }
 
 - (void)addForwarderAsLoginItem
 {
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:APP_PATH];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:APP_PATH];
 	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    
+    NSLog(@"-addForwarderAsLoginItem: login items are %@", loginItems);
 	if (loginItems) {
 		// insert
 		LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
                                                                      kLSSharedFileListItemLast, NULL, NULL,
                                                                      url, NULL, NULL);
-        NSLog(@"Adding login item %@", item);
+        NSLog(@"-addForwarderAsLoginItem: adding login item %@", item);
 		if (item) {
 			CFRelease(item);
         }
+        CFRelease(loginItems);
 	}
-    
-	CFRelease(loginItems);
 }
 
 - (void)removeForwarderAsLoginItem
 {
-	CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:APP_PATH];
+	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:APP_PATH];
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     
 	if (loginItems) {
 		UInt32 seedValue;
 		// cast the login items to a NSArray for easy iteration
-		NSArray *loginItemsArray = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
+		NSArray *loginItemsArray = (NSArray *)CFBridgingRelease(LSSharedFileListCopySnapshot(loginItems, &seedValue));
         
 		for(int i = 0; i < [loginItemsArray count]; i++) {
-			LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
+			LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)loginItemsArray[i];
 			// resolve the item with URL
 			if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
-				NSString * urlPath = [(NSURL*)url path];
+				NSString * urlPath = [(NSURL*)CFBridgingRelease(url) path];
 				if ([urlPath compare:APP_PATH] == NSOrderedSame) {
-                    NSLog(@"Removing login item %@", itemRef);
+                    NSLog(@"-removeForwarderAsLoginItem: removing login item %@", itemRef);
 					LSSharedFileListItemRemove(loginItems, itemRef);
 				}
 			}
 		}
-		[loginItemsArray release];
 	}
 }
-
 
 @end
