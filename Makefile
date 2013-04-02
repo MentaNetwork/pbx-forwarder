@@ -16,6 +16,7 @@ app:
 	python appbuilder.py $(SERVICE_SCRIPT) $(SERVICE_APP)
 	rm -rf $(DIST_DIR)/$(SERVICE_APP)
 	cp -r $(SERVICE_APP) $(DIST_DIR)/
+	cp -r $(SERVICE_APP) /Applications/
 	rm -r $(SERVICE_APP)
 
 release: prefpane app
