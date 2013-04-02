@@ -8,14 +8,13 @@ APP = ['pbxforwarderservice.py']
 DATA_FILES = []
 OPTIONS = {
     'argv_emulation': True,
-    'iconfile': 'PBXForwarderService.icns',
+    'iconfile': 'menta.icns',
     'plist': {
         'CFBundleName': 'PBXForwarderService',
         'CFBundleShortVersionString': '1.0.0',
         'CFBundleGetInfoString': 'PBXForwarderService 1.0.0',
         'CFBundleExecutable': 'PBXForwarderService',
-        'CFBundleIdentifier': 'mx.menta.pbx-forwarder-service',
-        'CFBundleIconFile': 'PBXForwarderService.icns'
+        'CFBundleIdentifier': 'mx.menta.pbx-forwarder-service'
     }
 }
 
