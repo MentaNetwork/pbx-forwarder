@@ -7,85 +7,131 @@ from time import sleep
 import signal
 from urllib import urlencode
 from urllib2 import Request, urlopen
+import requests
 
 
-PREF_PANE_APP_ID = 'mx.menta.pbx-forwarder-prefpane'
-PBX_BASE_URL = 'http://pbx.menta/'
-PBX_LOGIN_URL = PBX_BASE_URL + 'x.php'
-PBX_FORWARDING_URL = PBX_BASE_URL + 'x.php'
-
-LOG_FILE = '/tmp/pbx-forwarder-app.log'
-
-logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
-log = logging.getLogger('PBXFwdr')
+LOG_FILE = '/tmp/pbx-forwarder-service.log'
 
 
-def get_request(url, data=None, headers=None):
-    is_dict = lambda d: type(d) is dict
-    url += '?' + (urlencode(data) if is_dict(data) else data) if data else ''
-    return urlopen(Request(url=url, headers=headers or {})).read()
-
-def post_request(url, data=None, headers=None):
-    data = (urlencode(data) if type(data) is dict else data) if data else ''
-    return urlopen(Request(url=url, data=data, headers=headers or {})).read()
-
-def get_preferences():
-    plist_file = '~/Library/Preferences/%s.plist' % PREF_PANE_APP_ID
-    log.debug('Retrieving preferences from file %s' % plist_file)
-    raw_prefs = os.popen('defaults read %s' % plist_file).read()
-    return dict(re.findall(r'"([^"]+)" = (.+);', raw_prefs))
-
-def remove_forwarder():
-    log.info('Removing forwarder')
-    log.info('OK')
-
-def add_forwarder():
-    log.info('Adding forwarder')
-    log.info('OK')
-
-def signal_handler(signum, frame):
-    if signum != signal.SIGTERM:
-        log.debug('Signal %s - aint nobody got time fo dat')
-        return
-
-    try:
-        add_forwarder()
-        exit()
-    except Exception, e:
-        error = 'Could not add the forwarder due to: %s' % e
-        log.critical(error)
-        display_error_alert(error)
+class Preferences(dict):
     
-def display_error_alert(error):
-    os.popen("""osascript <<-EOF
-        tell application "System Events"
-            activate
-            display dialog "PBXForwarderError:\n\n%s" buttons {"OK"} with icon 0
-        end tell
-    EOF""" % error)
+    prefix = 'mx.menta.pbx.'
 
-def main():
+    def __init__(self, *args, **kwargs):
+        # TODO: remove unnecessary, unprefixed keys
+        super(Preferences, self).__init__(*args, **kwargs)
+
+    def __getattr__(self, name):
+        return dict.__getattr__(self, self.prefix + name)
+
+    def __getitem__(self, name):
+        return dict.__getitem__(self, self.prefix + name)
+
+
+class ServiceException(Exception):
+    pass
+
+
+class Service(object):
+
+    def __init__(self):
+        plist_file = '~/Library/Preferences/com.apple.systempreferences.plist'
+        
+        logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
+        self.log = logging.getLogger('-PBXForwarderService-')
+        
+        self.log.debug('Retrieving preferences from file %s' % plist_file)
+        raw_prefs = os.popen('defaults read %s' % plist_file).read()
+        
+        self.preferences = Preferences(re.findall(r'"([^"]+)" = (.+);', raw_prefs),foo='bar')
+        self.session = requests.Session()
     
-    log.info('Starting application with: %s' % get_preferences())
+    def main(self):
+        self.log.info('Starting application with: %s' % self.preferences)
+        
+        self.remove_forwarder()
 
-    remove_forwarder()
+        self.log.debug('Going to sleep waiting for SIGTERM')
+        for i in [x for x in dir(signal) if x.startswith('SIG')]:
+            try:
+                signum = getattr(signal, i)
+                signal.signal(signum, self.handle_signal)
+            except (RuntimeError, ValueError), m:
+                self.log.debug('Skipping signal %s' % i)
+        signal.signal(signal.SIG_IGN, self.handle_signal)
 
-    log.debug('Going to sleep waiting for SIGTERM')
-    for i in [x for x in dir(signal) if x.startswith('SIG')]:
+        while True:
+            sleep(1)
+
+    def handle_signal(self, signum, frame):
+        if signum != signal.SIGTERM:
+            self.log.debug('Signal %s - aint nobody got time fo dat')
+            return
+        
         try:
-            signum = getattr(signal, i)
-            signal.signal(signum, signal_handler)
-        except (RuntimeError, ValueError), m:
-            log.debug('Skipping signal %s' % i)
-    signal.signal(signal.SIG_IGN, signal_handler)
+            self.add_forwarder()
+            exit()
+        except ServiceException, e:
+            error = 'Could not add the forwarder due to: %s' % e
+            self.log.critical(error)
+            self.display_error_alert(error)
 
-    while True:
-        sleep(1)
+    def display_error_alert(self, error):
+        os.popen("""osascript <<-EOF
+            tell application "System Events"
+                activate
+                display dialog "PBXForwarderServiceError:\n\n%s" buttons {"OK"} with icon 0
+            end tell
+        EOF""" % error)
+
+    def login(self):
+        login_data = {'extension': self.preferences['extension_number'],
+                      'password': self.preferences['extension_password'],
+                      'Submit.x': '54',
+                      'Submit.y': '15',
+                      'Submit': 'Log In', 
+                      'url': ''}
+        response = self.session.post('http://pbx.menta/index2.php', data=login_data)
+        # TODO: check response body
+        if not response.ok:
+            error = 'Login failed'
+            self.log.critical(error)
+            raise ServiceException(error)
+
+    def add_forwarder(self):
+        self.login()
+
+        forwarding_data = {'extension': self.preferences['extension_number'],
+                        'number': self.preferences['target_forwarding_number']}
+        url = 'http://pbx.menta/userforwardmodify2.php'
+        response = self.session.post(url, data=forwarding_data)
+        
+        # TODO: check response body
+        if not response.ok:
+            error = 'Forwarding setup failed'
+            self.log.critical(error)
+            raise ServiceException(error)
+
+    def remove_forwarder(self):
+        self.login()
+
+        forwarding_data = {'extension': self.preferences['extension_number'],
+                           'Submit': 'Delete'}
+        url = 'http://pbx.menta/userforwarddelete2.php'
+        response = self.session.post(url, data=forwarding_data)
+
+        # TODO: check response body
+        if not response.ok:
+            error = 'Forwarding removal failed'
+            self.log.critical(error)
+            raise ServiceException(error)
 
 
 if __name__ == '__main__':
     try:
-        main()
+        service = Service()
+        service.main()
     except Exception, e:
-        log.critical(e)
-        exit()
+        raise
+        print 'Fatal error:', e
+        exit(1)
