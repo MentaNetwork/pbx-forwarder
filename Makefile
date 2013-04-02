@@ -4,22 +4,23 @@ SERVICE_SCRIPT = pbxforwarderservice.py
 DIST_DIR = dist/PBXForwarder
 DMG = PBXForwarder.dmg
 
-.PHONY: prefpane app foo release try
+.PHONY: prefpane service foo release try
 
 prefpane:
 	mkdir -p $(DIST_DIR)
 	xcodebuild
 	cp -r build/Release/$(PREF_PANE) $(DIST_DIR)
 
-app:
+service:
 	mkdir -p $(DIST_DIR)
-	python appbuilder.py $(SERVICE_SCRIPT) $(SERVICE_APP)
+	rm -rf /Applications/$(SERVICE_APP)
 	rm -rf $(DIST_DIR)/$(SERVICE_APP)
-	cp -r $(SERVICE_APP) $(DIST_DIR)/
-	cp -r $(SERVICE_APP) /Applications/
-	rm -r $(SERVICE_APP)
+	python setup.py py2app --dist-dir=$(DIST_DIR)
+	cp -r $(DIST_DIR)/$(SERVICE_APP) /Applications/
 
-release: prefpane app
+dist: prefpane service
+
+release: prefpane service
 	hdiutil create dist/$(DMG) -srcfolder $(DIST_DIR) -ov
 
 try: prefpane
