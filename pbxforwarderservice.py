@@ -3,6 +3,7 @@
 import os
 import re
 import logging
+import logging.handlers
 from time import sleep
 import signal
 from urllib import urlencode
@@ -10,8 +11,24 @@ from urllib2 import Request, urlopen
 import requests
 
 
-LOG_FILE = '/tmp/pbx-forwarder-service.log'
+class Log(object):
+    """Custom log to be friendly with OSX's syslog"""
 
+    app = 'PBXForwarderService'
+    
+    def __init__(self):
+        self.log = logging.getLogger()
+        self.log.setLevel(logging.DEBUG)
+        handler = logging.handlers.SysLogHandler(address='/var/run/syslog')
+        self.log.addHandler(handler)
+    
+    def __getattr__(self, name):
+        levels = ['info', 'debug', 'warning', 'error', 'critical', 'log', 'exception']
+        if name not in levels:
+            self.warning('Log level %s does not exist, using info' % name)
+            name = 'info'
+        return lambda msg: getattr(self.log, name)('%s: %s' % (self.app, msg))
+        
 
 class Preferences(dict):
     
@@ -37,8 +54,7 @@ class Service(object):
     def __init__(self):
         plist_file = '~/Library/Preferences/com.apple.systempreferences.plist'
         
-        logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
-        self.log = logging.getLogger('-PBXForwarderService-')
+        self.log = Log()
         
         self.log.debug('Retrieving preferences from file %s' % plist_file)
         raw_prefs = os.popen('defaults read %s' % plist_file).read()
@@ -132,6 +148,7 @@ if __name__ == '__main__':
         service = Service()
         service.main()
     except Exception, e:
-        raise
-        print 'Fatal error:', e
+        #raise
+        log = Log()
+        log.critical('Fatal error: %s' % e)
         exit(1)
