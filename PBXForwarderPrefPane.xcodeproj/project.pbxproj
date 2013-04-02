@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		943B2B7516FFEA1B0086D6F6 /* logo.256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 943B2B7316FFEA1B0086D6F6 /* logo.256x256.png */; };
+		943D4B79170AD2B9007464FF /* menta.icns in Resources */ = {isa = PBXBuildFile; fileRef = 943D4B78170AD2B9007464FF /* menta.icns */; };
 		949FD20716FE93DF00F8624D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949FD20616FE93DF00F8624D /* Cocoa.framework */; };
 		949FD20916FE93DF00F8624D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949FD20816FE93DF00F8624D /* PreferencePanes.framework */; };
 		949FD21316FE93DF00F8624D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 949FD21116FE93DF00F8624D /* InfoPlist.strings */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		943B2B7316FFEA1B0086D6F6 /* logo.256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.256x256.png; sourceTree = "<group>"; };
+		943D4B78170AD2B9007464FF /* menta.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = menta.icns; sourceTree = "<group>"; };
 		949FD20316FE93DF00F8624D /* PBXForwarderPrefPane.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PBXForwarderPrefPane.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
 		949FD20616FE93DF00F8624D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		949FD20816FE93DF00F8624D /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
@@ -88,6 +90,7 @@
 				949FD21616FE93DF00F8624D /* PBXForwarderPrefPane.m */,
 				949FD22216FE946000F8624D /* PBXForwarderPrefPane.xib */,
 				943B2B7316FFEA1B0086D6F6 /* logo.256x256.png */,
+				943D4B78170AD2B9007464FF /* menta.icns */,
 				949FD20F16FE93DF00F8624D /* Supporting Files */,
 			);
 			path = PBXForwarderPrefPane;
@@ -169,6 +172,7 @@
 				949FD21316FE93DF00F8624D /* InfoPlist.strings in Resources */,
 				949FD22316FE946000F8624D /* PBXForwarderPrefPane.xib in Resources */,
 				943B2B7516FFEA1B0086D6F6 /* logo.256x256.png in Resources */,
+				943D4B79170AD2B9007464FF /* menta.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
