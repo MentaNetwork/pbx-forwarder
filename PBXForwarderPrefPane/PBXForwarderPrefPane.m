@@ -130,9 +130,11 @@ NSString * const APP_PATH = @"/Applications/PBXForwarderService.app";
     NSLog(@"-addForwarderAsLoginItem: login items are %@", loginItems);
 	if (loginItems) {
 		// insert
+        CFMutableDictionaryRef properties = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
+        CFDictionaryAddValue(properties, kLSSharedFileListLoginItemHidden, kCFBooleanTrue);
 		LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
                                                                      kLSSharedFileListItemLast, NULL, NULL,
-                                                                     url, NULL, NULL);
+                                                                     url, properties, NULL);
         NSLog(@"-addForwarderAsLoginItem: adding login item %@", item);
 		if (item) {
 			CFRelease(item);
