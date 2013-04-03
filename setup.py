@@ -14,7 +14,10 @@ OPTIONS = {
         'CFBundleShortVersionString': '1.0.0',
         'CFBundleGetInfoString': 'PBXForwarderService 1.0.0',
         'CFBundleExecutable': 'PBXForwarderService',
-        'CFBundleIdentifier': 'mx.menta.pbx-forwarder-service'
+        'CFBundleIdentifier': 'mx.menta.pbx-forwarder-service',
+        'LSBackgroundOnly': '1',
+        'LSUIElement': '1', # do not show it in the Dock
+        'LSMultipleInstancesProhibited': '1',
     }
 }
 
