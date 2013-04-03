@@ -32,11 +32,11 @@ class Log(object):
         
 
 class Preferences(dict):
-    
+    """Preferences container to handle key prefixes more easily."""
+
     prefix = 'mx.menta.pbx.'
 
     def __init__(self, *args, **kwargs):
-        # TODO: remove unnecessary, unprefixed keys
         super(Preferences, self).__init__(*args, **kwargs)
 
     def __getattr__(self, name):
@@ -51,21 +51,31 @@ class ServiceException(Exception):
 
 
 class Service(object):
+    """Main service app that removes the forwarder, then sleeps in the 
+    background, and adds the forwarder when SIGTERM is received."""
+
+    timeout = 20
 
     def __init__(self):
-        plist_file = '~/Library/Preferences/com.apple.systempreferences.plist'
-        
         self.log = Log()
-        
-        self.log.debug('Retrieving preferences from file %s' % plist_file)
-        raw_prefs = os.popen('defaults read %s' % plist_file).read()
-        
-        self.preferences = Preferences(re.findall(r'"([^"]+)" = (.+);', raw_prefs),foo='bar')
         self.session = requests.Session()
     
+    def get_preferences(self):
+        # ALWAYS read the preferences to catch any updates
+        plist_file = '~/Library/Preferences/com.apple.systempreferences.plist'
+        self.log.debug('Retrieving preferences from file %s' % plist_file)
+        raw_prefs = os.popen('defaults read %s' % plist_file).read()
+        prefixed_prefs_regexp = r'"(%s[^"]+)" = (.+);' % Preferences.prefix
+        prefixed_prefs = re.findall(prefixed_prefs_regexp, raw_prefs)
+        return Preferences(prefixed_prefs, foo='bar')
+
     def main(self):
-        self.log.info('Starting application with: %s' % self.preferences)
+        self.log.info('Starting application with: %s' % self.get_preferences())
         
+        self.log.info('Waiting %s seconds before removing the forwarder' % 60)
+
+        sleep(60)
+
         self.remove_forwarder()
 
         self.log.debug('Going to sleep waiting for SIGTERM')
@@ -78,18 +88,18 @@ class Service(object):
         signal.signal(signal.SIG_IGN, self.handle_signal)
 
         while True:
-            sleep(1)
+            sleep(3)
 
     def handle_signal(self, signum, frame):
         if signum != signal.SIGTERM:
-            self.log.debug('Signal %s - aint nobody got time fo dat')
+            self.log.debug('Signal %s - aint nobody got time fo dat' % signum)
             return
         
         try:
             self.add_forwarder()
             sys.exit()
-        except ServiceException, e:
-            error = 'Could not add the forwarder due to: %s' % e
+        except Exception, e:
+            error = 'No pude activar el forwardeo de tu extensión.\nError:\n%s' % e
             self.log.critical(error)
             self.display_error_alert(error)
 
@@ -102,13 +112,15 @@ class Service(object):
         EOF""" % error)
 
     def login(self):
-        login_data = {'extension': self.preferences['extension_number'],
-                      'password': self.preferences['extension_password'],
+        preferences = self.get_preferences()
+        login_data = {'extension': preferences['extension_number'],
+                      'password': preferences['extension_password'],
                       'Submit.x': '54',
                       'Submit.y': '15',
                       'Submit': 'Log In', 
                       'url': ''}
-        response = self.session.post('http://pbx.menta/index2.php', data=login_data, timeout=100)
+        response = self.session.post('http://pbx.menta/index2.php', data=login_data,
+                                     timeout=self.timeout)
         # TODO: check response body
         if not response.ok:
             error = 'Login failed'
@@ -118,10 +130,12 @@ class Service(object):
     def add_forwarder(self):
         self.login()
 
-        forwarding_data = {'extension': self.preferences['extension_number'],
-                        'number': self.preferences['target_forwarding_number']}
+        preferences = self.get_preferences()
+        forwarding_data = {'extension': preferences['extension_number'],
+                        'number': preferences['target_forwarding_number']}
         url = 'http://pbx.menta/userforwardmodify2.php'
-        response = self.session.post(url, data=forwarding_data, timeout=100)
+        response = self.session.post(url, data=forwarding_data,
+                                     timeout=self.timeout)
         
         # TODO: check response body
         if not response.ok:
@@ -132,10 +146,12 @@ class Service(object):
     def remove_forwarder(self):
         self.login()
 
-        forwarding_data = {'extension': self.preferences['extension_number'],
+        preferences = self.get_preferences()
+        forwarding_data = {'extension': preferences['extension_number'],
                            'Submit': 'Delete'}
         url = 'http://pbx.menta/userforwarddelete2.php'
-        response = self.session.post(url, data=forwarding_data, timeout=100)
+        response = self.session.post(url, data=forwarding_data, 
+                                     timeout=self.timeout)
 
         # TODO: check response body
         if not response.ok:
@@ -150,5 +166,5 @@ if __name__ == '__main__':
         service.main()
     except Exception, e:
         log = Log()
-        log.critical('Fatal error: %s' % e)
+        log.critical('Unhandled fatal error: %s' % e)
         sys.exit(2)
