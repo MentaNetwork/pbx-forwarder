@@ -126,45 +126,45 @@ NSString * const APP_PATH = @"/Applications/PBXForwarderService.app";
 - (void)addForwarderAsLoginItem
 {
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:APP_PATH];
-	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSLog(@"-addForwarderAsLoginItem: login items are %@", loginItems);
-	if (loginItems) {
-		// insert
+    if (loginItems) {
+        // insert
         CFMutableDictionaryRef properties = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
         CFDictionaryAddValue(properties, kLSSharedFileListLoginItemHidden, kCFBooleanTrue);
-		LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
+        LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
                                                                      kLSSharedFileListItemLast, NULL, NULL,
                                                                      url, properties, NULL);
         NSLog(@"-addForwarderAsLoginItem: adding login item %@", item);
-		if (item) {
-			CFRelease(item);
+        if (item) {
+            CFRelease(item);
         }
         CFRelease(loginItems);
-	}
+    }
 }
 
 - (void)removeForwarderAsLoginItem
 {
-	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:APP_PATH];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:APP_PATH];
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     
-	if (loginItems) {
-		UInt32 seedValue;
-		// cast the login items to a NSArray for easy iteration
-		NSArray *loginItemsArray = (NSArray *)CFBridgingRelease(LSSharedFileListCopySnapshot(loginItems, &seedValue));
+    if (loginItems) {
+        UInt32 seedValue;
+        // cast the login items to a NSArray for easy iteration
+        NSArray *loginItemsArray = (NSArray *)CFBridgingRelease(LSSharedFileListCopySnapshot(loginItems, &seedValue));
         
-		for(int i = 0; i < [loginItemsArray count]; i++) {
-			LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)loginItemsArray[i];
-			// resolve the item with URL
-			if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
-				NSString * urlPath = [(NSURL*)CFBridgingRelease(url) path];
-				if ([urlPath compare:APP_PATH] == NSOrderedSame) {
+        for(int i = 0; i < [loginItemsArray count]; i++) {
+            LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)loginItemsArray[i];
+            // resolve the item with URL
+            if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
+                NSString * urlPath = [(NSURL*)CFBridgingRelease(url) path];
+                if ([urlPath compare:APP_PATH] == NSOrderedSame) {
                     NSLog(@"-removeForwarderAsLoginItem: removing login item %@", itemRef);
-					LSSharedFileListItemRemove(loginItems, itemRef);
-				}
-			}
-		}
-	}
+                    LSSharedFileListItemRemove(loginItems, itemRef);
+                }
+            }
+        }
+    }
 }
 
 @end
