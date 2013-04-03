@@ -46,6 +46,18 @@ NSString * const APP_PATH = @"/Applications/PBXForwarderService.app";
     [extensionPassword setStringValue:[self getPreferenceValueForKey:KEY_EXTENSION_PASSWORD]];
     [targetForwardingNumber setStringValue:[self getPreferenceValueForKey:KEY_TARGET_FORWARDING_NUMBER]];
     
+    // open the service app if necessary
+    BOOL running = [[NSRunningApplication runningApplicationsWithBundleIdentifier:@"mx.menta.pbx-forwarder-service"] count] == 0;
+    
+    if (running) {
+        
+        if ([[NSWorkspace sharedWorkspace] launchApplication:@"PBXForwarderService"]) {
+            NSLog(@"-mainViewDidLoad: service app opened");
+        } else {
+            NSLog(@"-mainViewDidLoad: could not open the service app");
+        }
+    }
+    
     [self updateForwardingVisualStatus];
     
     NSLog(@"-mainViewDidLoad: forwarding state is %@", [forwardingToggler stringValue]);
