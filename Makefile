@@ -10,6 +10,7 @@ prefpane:
 	mkdir -p $(DIST_DIR)
 	xcodebuild
 	cp -r build/Release/$(PREF_PANE) $(DIST_DIR)
+	cp -r build/Release/$(PREF_PANE) ~/Library/PreferencePanes/
 
 service:
 	mkdir -p $(DIST_DIR)
