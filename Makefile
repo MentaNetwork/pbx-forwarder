@@ -2,7 +2,8 @@ PREF_PANE = PBXForwarderPrefPane.prefPane
 SERVICE_APP = PBXForwarderService.app
 SERVICE_SCRIPT = pbxforwarderservice.py
 DIST_DIR = dist/PBXForwarder
-DMG = PBXForwarder.dmg
+DMG_VOLUME = PBXForwarder
+DMG_SIZE = 3500
 
 .PHONY: prefpane service foo release try
 
@@ -20,12 +21,32 @@ service:
 	cp -r $(DIST_DIR)/$(SERVICE_APP) /Applications/
 
 dist: prefpane service
+	ln -s ~/Library/PreferencePanes $(DIST_DIR)/Preferencias
+	ln -s /Applications $(DIST_DIR)/Aplicaciones
 
 release: prefpane service
-	hdiutil create dist/$(DMG) -srcfolder $(DIST_DIR) -ov
+	hdiutil "create dist/$(DMG_VOLUME).dmg" -srcfolder $(DIST_DIR) -ov
 
 try: prefpane
 	cp -r $(DIST_DIR)/$(PREF_PANE) ~/Library/PreferencePanes/
 	killall "System Preferences" || true
 	open ~/Library/PreferencePanes/$(PREF_PANE)
+
+dmg: dist
+	rm -f pack.temp.dmg
+	hdiutil create -srcfolder "$(DIST_DIR)" -volname "$(DMG_VOLUME)" -fs HFS+ \
+		-fsargs "-c c=64,a=16,e=16" -format UDRW -size $(DMG_SIZE)k pack.temp.dmg
+	DEVICE=`hdiutil attach -readwrite -noverify -noautoopen "pack.temp.dmg" | \
+		egrep '^/dev/' | sed 1q | awk '{print $$1}'`
+	echo "Device: ${DEVICE} $DEVICE"
+	mkdir -p /Volumes/$(DMG_VOLUME)/.background
+	cp dmg.png /Volumes/$(DMG_VOLUME)/.background/
+	osascript dmg.scpt $(DMG_VOLUME) $(SERVICE_APP) $(PREF_PANE)
+	chmod -Rf go-w /Volumes/"$(DMG_VOLUME)"
+	sync
+	sync
+	hdiutil detach $DEVICE
+	hdiutil convert "pack.temp.dmg" -format UDZO -imagekey zlib-level=9 -o "$(DMG_VOLUME).dmg"
+	rm -f pack.temp.dmg
+
 
