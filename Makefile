@@ -32,6 +32,10 @@ try: prefpane
 	killall "System Preferences" || true
 	open ~/Library/PreferencePanes/$(PREF_PANE)
 
+clean:
+	rm -rf dist/*
+	rm -rf build/*
+
 dmg: dist
 	rm -f pack.temp.dmg
 	hdiutil create -srcfolder "$(DIST_DIR)" -volname "$(DMG_VOLUME)" -fs HFS+ \
