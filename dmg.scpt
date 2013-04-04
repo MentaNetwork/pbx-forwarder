@@ -17,7 +17,7 @@ on run argv
             set icon size of viewoptions to 72
             set background picture of viewoptions to file ".background:dmg.png"
             set position of item (item 2 of argv) of container window to {300, 200}
-            set position of item "Applicaciones" of container window to {475, 200}
+            set position of item "Aplicaciones" of container window to {475, 200}
             set position of item (item 3 of argv) of container window to {300, 400}
             set position of item "Preferencias" of container window to {475, 400}
             update without registering applications
