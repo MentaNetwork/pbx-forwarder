@@ -11,3 +11,4 @@
 * dmg.png a 72dpi
 * Crear smlinks desde applescript para obtener el home del usuario
 * Arreglar variable DEVICE
+* Mover ```rm```s a ```clean```
