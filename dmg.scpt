@@ -20,9 +20,9 @@ on run argv
             set background picture of opts to file ".background:dmg.png"
             set the bounds of container window to {303, 176, 1002, 574}
             -- pref pane
-            set position of item (item 3 of argv) of container window to {131, 107}
+            set position of item (item 2 of argv) of container window to {131, 107}
             -- service app
-            set position of item (item 2 of argv) of container window to {131, 237}
+            set position of item (item 3 of argv) of container window to {131, 237}
             -- symlinks
             set position of item "Preferencias" of container window to {570, 108}
             set position of item "Aplicaciones" of container window to {570, 243}
