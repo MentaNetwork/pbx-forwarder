@@ -101,7 +101,7 @@ def install():
     uninstall()
     build()
     sh("""
-    cp {DIST_DIR}/{SERVICE_APP} /Applications
-    cp {DIST_DIR}/{PREF_PANE} {PANES_DIR}
+    cp -r {DIST_DIR}/{SERVICE_APP} /Applications
+    cp -r {DIST_DIR}/{PREF_PANE} {PANES_DIR}
     """)
 
