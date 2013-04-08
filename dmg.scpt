@@ -1,7 +1,8 @@
+-- This script pimps the .dmg volume
 -- ARGV:
 -- 1 DMG_VOLUME
--- 2 SERVICE_APP
--- 3 PREF_PANE
+-- 2 PREF_PANE
+-- 3 SERVICE_APP
 
 on run argv
     -- tell application "Terminal" to display dialog (item 1 of argv)
@@ -11,18 +12,26 @@ on run argv
             set current view of container window to icon view
             set toolbar visible of container window to false
             set statusbar visible of container window to false
-            set the bounds of container window to {400, 100, 980, 600}
-            set viewoptions to the icon view options of container window
-            set arrangement of viewoptions to not arranged
-            set icon size of viewoptions to 72
-            set background picture of viewoptions to file ".background:dmg.png"
-            set position of item (item 2 of argv) of container window to {300, 200}
-            set position of item "Aplicaciones" of container window to {475, 200}
-            set position of item (item 3 of argv) of container window to {300, 400}
-            set position of item "Preferencias" of container window to {475, 400}
+            set opts to the icon view options of container window
+            tell opts
+                set icon size to 72
+                set arrangement to not arranged
+            end tell
+            set background picture of opts to file ".background:dmg.png"
+            set the bounds of container window to {303, 176, 1002, 574}
+            -- pref pane
+            set position of item (item 3 of argv) of container window to {131, 107}
+            -- service app
+            set position of item (item 2 of argv) of container window to {131, 237}
+            -- symlinks
+            set position of item "Preferencias" of container window to {570, 108}
+            set position of item "Aplicaciones" of container window to {570, 243}
+            -- close and open to force the .DSStore to be written 
+            -- and thus the above position commands to work
+            close
+            open
             update without registering applications
-            delay 2
-            eject
+            delay 5
         end tell
     end tell
 end run
