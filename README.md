@@ -34,6 +34,7 @@ $ open dist
 ### Instalación y uso
 
 * Abrir el PBXForwarder.dmg y arrastrar a la derecha los elementos de la izquierda, a los directorios de Aplicaciones y Páneles de preferencias.
+* __No abrir ninguna de las dos aplicaciones directamente__.
 * Abrir la aplicación de Preferencias de OSX y luego el panel PBX Forwarder que aparecerá en la parte inferior.
 * Capturar número de extensión, número de forwarding, y password de pbx.menta.
 * Activar el forwarding con el botón.
