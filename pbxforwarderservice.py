@@ -96,6 +96,7 @@ class Service(object):
             return
         
         try:
+            self.log.debug('SIGTERM received - adding forwarding')
             self.add_forwarder()
             sys.exit()
         except Exception, e:
@@ -104,7 +105,8 @@ class Service(object):
             self.display_error_alert(error)
 
     def display_error_alert(self, error):
-        os.popen("""osascript <<-EOF
+        # http://helpx.adobe.com/photoshop/kb/unit-type-conversion-error-applescript.html
+        os.popen("""arch -i386 osascript <<-EOF
             tell application "System Events"
                 activate
                 display dialog "PBXForwarderServiceError:\n\n%s" buttons {"OK"} with icon 0

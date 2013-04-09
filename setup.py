@@ -18,6 +18,8 @@ OPTIONS = {
         'LSBackgroundOnly': '1',
         'LSUIElement': '1', # do not show it in the Dock
         'LSMultipleInstancesProhibited': '1',
+        'NSSupportsSuddenTermination': 'NO',
+        'EnableTransactions': False,
     }
 }
 
