@@ -1,5 +1,7 @@
 # PBX Forwarder beta
 
+![image](pbxforwarder-screenshot.png)
+
 
 ### Objetivos
 
